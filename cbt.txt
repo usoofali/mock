@@ -1,0 +1,31 @@
+Here is a problem i need your help:
+i want a light weight but strong exam system with just four pages namely:
+exam_setting_table(id, system_name, logo, exam_time_allowed)
+Login page(put nice style): requires just username and password from users_table(user_id, unsername, password, fulname), with system_name and logo(50%) displayed from exam_session_table
+	precondition: check exam_session_table if submit_status column equal 0 and if the difference between current time and start_at time is < exam_time_allowed else display error('Exam session has expired').
+Exam_instruction page(put nice style): after successful login the user should see this page with exam instruction, with two buttons "Start Exam" and "Logout"
+	Start Exam Button: proceed to exam page, but before insert if does not exist into exam_session_table(session_id, user_id(unique), started_at, stop_at, submit_status(0), total_score(0), remaining_time) else redirect to login page
+	Logout: Logout if not willing to start the exam
+exam_page(put nice style): exam page this is where all the exam should carried out and submitted, prevent browsers back button if this page is loaded, the exam page shall have three sections as follows:
+	onloading: onloading exam page randomly 200 fetch questions form question_table(question_id, question, option1, option2, option3, option4, answer), and insert all the questions if questions with the user_id does not exist, into answers_table(question_answer_id, question_number, question, option1, option2, option3, option4, answer, user_anwser(0), user_id), else fetch questions and populate question map/grid with question_number as button text and id 
+	first section: contains user details like name and username, countdown timer(h:m:s) dispalaying dynamiccally remaining time for the exam, and "Submit Exam" button if the user wants to end the exam
+		countdown timer: initialize timer by calculating the difference between current time and start_at time from exam_session_table where user_id equalize and finally trigger "Exam Submit" button if timer countdown reaches 0 
+		on "Submit Exam" Button click: onclick goto exam completed page, but before proceeding fetch all user's questions from answers_table initialize score_counter, foreach question check if user_answer and answser column are equal increment the score_counter and finally update exam_session_table set total_score equal score_counter where current user_id equalize. 
+	second section: contain question which is going to be multi option questions, this section contains two rows, first row  contains question and second row contains four options using radio(label as A,B,C,D and value as 1,2,3,4 respectively) buttons
+		onselect: on radio button select asynchroneously update user_answer in the answers_table by user_id and question_answer_id 
+	third section: contains question map, that is buttons arrange in grid representing total questions to be answered, each button is representing one question by question_id and has two properties color and action
+		color: if question is answered button color should be green and if not answered button color should be gray
+		action: onclick asynchroneously change current question in second section based on the question_answer_id from answers_table
+exam_completed page(put nice style): display message boldly to the user that the exam was successfully submitted, with a button upon click event it will redirect to login page.
+exam_setting_table(id, system_name, logo, exam_time_allowed)
+
+technonogy: php, PDO, bootstrap, jquery, mysql
+
+//assets
+jquery/jquery-3.2.1.min.js
+login.php
+logout.php
+exam_start.php
+instrcution.php
+completed.php
+db.php
