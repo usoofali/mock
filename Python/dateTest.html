@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Input Interaction</title>
+</head>
+<body>
+    <label for="date">Choose a date:</label>
+    <input type="date" id="date">
+    <button id="show-date">Show Date</button>
+    <p id="date-display"></p>
+
+    <script>
+        document.getElementById('show-date').addEventListener('click', function() {
+            const dateValue = document.getElementById('date').value;
+            document.getElementById('date-display').textContent = `The selected date is: ${dateValue}`;
+        });
+    </script>
+</body>
+</html>
